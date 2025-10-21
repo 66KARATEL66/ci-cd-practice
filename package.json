@@ -5,7 +5,7 @@
   "main": "sum.js",
   "scripts": {
     "test": "mocha",
-    "build": "tsc"
+    "build": "echo 'No build needed for pure JS project'"
   },
   "repository": {
     "type": "git",
