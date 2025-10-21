@@ -10,7 +10,7 @@ permissions:
   deployments: write
 
 env:
-  NODE_VERSION: '20.x' # приклад env на рівні workflow
+  NODE_VERSION: '20.0.x' # приклад env на рівні workflow
 
 jobs:
   test:

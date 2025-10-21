@@ -19,7 +19,6 @@
   "homepage": "https://github.com/66KARATEL66/ci-cd-practice#readme",
   "devDependencies": {
     "chai": "^6.2.0",
-    "jest": "^30.2.0",
     "mocha": "^11.7.4"
   }
 }
