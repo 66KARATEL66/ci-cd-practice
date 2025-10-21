@@ -1,0 +1,111 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ["**"] # запуск на будь-яку гілку
+  pull_request:
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  NODE_VERSION: '20.x' # приклад env на рівні workflow
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Use Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # Restore npm cache
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}
+
+      # Install dependencies
+      - name: Install deps
+        run: npm ci
+
+      # Run tests
+      - name: Run tests
+        run: npm test -- --reporter=junit --reporter-options "mochaFile=reports/report.xml" || true
+
+      # Upload test report (JUnit)
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: junit-report
+          path: reports/report.xml
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [test] # виконуємо після тестів
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      # Upload build artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: dist
+
+  deploy:
+    name: Deploy (staging)
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main' # деплой лише з main
+    environment:
+      name: staging
+      url: https://staging.example.com
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: ./artifact
+
+      - name: Simulate deploy
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "Deploying to ${{ github.environment }} with token: $DEPLOY_TOKEN****"
+          ls -la ./artifact
+          echo "Deploy success"
