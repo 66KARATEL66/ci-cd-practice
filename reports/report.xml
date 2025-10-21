@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.002" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-10-21T19:44:54" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="sum function" timestamp="2025-10-21T19:44:54" tests="1" file="C:\Users\push3\Documents\Unity Projects\ci-cd-practice\test\sum.test.js" time="0.001" failures="0">
+    <testcase name="sum function adds 1 + 2 to equal 3" time="0.001" classname="adds 1 + 2 to equal 3">
+    </testcase>
+  </testsuite>
+</testsuites>

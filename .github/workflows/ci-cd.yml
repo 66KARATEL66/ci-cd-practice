@@ -43,7 +43,7 @@ jobs:
 
       # Run tests
       - name: Run tests
-        run: npm test -- --reporter=junit --reporter-options "mochaFile=reports/report.xml" || true
+        run: npm test -- --reporter=mocha-junit-reporter --reporter-options "mochaFile=reports/report.xml" || true
 
       # Upload test report (JUnit)
       - name: Upload test report
