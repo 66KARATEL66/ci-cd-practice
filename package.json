@@ -1,0 +1,23 @@
+{
+  "name": "ci-cd-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sum.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/66KARATEL66/ci-cd-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/66KARATEL66/ci-cd-practice/issues"
+  },
+  "homepage": "https://github.com/66KARATEL66/ci-cd-practice#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
