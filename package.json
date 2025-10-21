@@ -4,8 +4,7 @@
   "description": "",
   "main": "sum.js",
   "scripts": {
-    "test": "mocha",
-    "build": "echo 'No build needed for pure JS project'"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
